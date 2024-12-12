@@ -1,11 +1,7 @@
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded');
-  
   // 获取当前标签页信息
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    console.log('Got tab info:', tabs[0]);
-    
     const tab = tabs[0];
     const url = tab.url;
     const title = tab.title;
@@ -43,30 +39,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 下载二维码
     const downloadBtn = document.getElementById('download-btn');
-    console.log('Download button found:', downloadBtn);
     
     downloadBtn.addEventListener('click', function() {
-      console.log('Download button clicked');
+      // 创建下载链接
+      const link = document.createElement('a');
+      const filename = title.replace(/[\\/:*?"<>|]/g, '_') + '.png';
       
-      try {
-        // 创建文件名
-        const filename = title.replace(/[\\/:*?"<>|]/g, '_') + '.png';
-        
-        // 使用chrome.downloads API下载
-        chrome.downloads.download({
-          url: qrImg.src,
-          filename: filename,
-          saveAs: false
-        }, function(downloadId) {
-          if (chrome.runtime.lastError) {
-            console.error('Download failed:', chrome.runtime.lastError);
-          } else {
-            console.log('Download started:', downloadId);
-          }
-        });
-      } catch (error) {
-        console.error('Error during download:', error);
-      }
+      // 直接使用二维码的base64数据
+      link.href = qrImg.src;
+      link.download = filename;
+      
+      // 触发下载
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   });
 }); 
