@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>网页二维码</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 二维码容器 -->
+    <div class="qrcode-wrapper">
+      <div id="qrcode"></div>
+      <img id="favicon" class="favicon" src="" alt="favicon">
+    </div>
+    
+    <!-- 网站标题 -->
+    <div class="site-info">
+      <h2 id="site-title"></h2>
+    </div>
+    
+    <!-- 下载按钮 -->
+    <button id="download-btn" class="download-btn">
+      下载二维码
+    </button>
+  </div>
+  <script src="qrcode.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html> 
